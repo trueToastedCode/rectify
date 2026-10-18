@@ -1,5 +1,7 @@
 # Rectify
 
+<p align="center"><img src="docs/icon.png" width="128" alt="Rectify app icon"></p>
+
 A menu-bar window manager for macOS 14+. Keyboard tiling with size cycling,
 drag-to-edge snapping with a live preview, gaps, display moves and restore.
 
