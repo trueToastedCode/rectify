@@ -3,14 +3,43 @@
 A menu-bar window manager for macOS 14+. Keyboard tiling with size cycling,
 drag-to-edge snapping with a live preview, gaps, display moves and restore.
 
-## Build and run
+## Install
+
+1. Open `Rectify-<version>.dmg`.
+2. Drag **Rectify** onto **Applications** in the window that opens.
+3. Launch Rectify from Applications and allow Accessibility access when asked.
+
+The build isn't notarized, so the first launch may be blocked. If it is,
+right-click Rectify in Applications, choose **Open**, then **Open** again.
+
+## Build from source
+
+Requires Xcode 15+ (or its command-line tools) on macOS 14+.
 
 ```sh
-swift test             # geometry + snap-zone unit tests
-./build.sh             # -> build/Rectify.app
-./build.sh --install   # also copies to /Applications (needed for Launch at Login)
-open Package.swift     # to work on it in Xcode
+swift test                 # geometry + snap-zone unit tests
+./build.sh                 # -> build/Rectify.app
+./build.sh --install       # also copies to /Applications (needed for Launch at Login)
+Scripts/make-dmg.sh        # -> build/Rectify-<version>.dmg installer
+open Package.swift         # to work on it in Xcode
 ```
+
+The version in the DMG name comes from `CFBundleShortVersionString` in
+`Resources/Info.plist`.
+
+### Icon and installer artwork
+
+Both are drawn in code, so they can be tweaked and regenerated:
+
+```sh
+swift Scripts/make-icon.swift            # -> Resources/AppIcon.icns
+swift Scripts/make-dmg-background.swift  # -> Resources/dmg/background(@2x).png
+```
+
+`make-dmg.sh` uses only built-in tools (`hdiutil`, `tiffutil`, `osascript`).
+The first run asks for permission to control Finder, which it uses to lay out
+the installer window. If that's declined the DMG still works, just without the
+background and icon arrangement.
 
 First launch asks for **Accessibility** access (System Settings → Privacy &
 Security → Accessibility). The build is ad-hoc signed, so macOS treats each
@@ -59,6 +88,8 @@ Sources/RectifyCore/   pure geometry (no AppKit), unit-tested
   WindowAction.swift   the action list
   Layout.swift         target frames, cycling, gaps, display moves
   SnapZones.swift      cursor position -> snap action
+Scripts/               icon, DMG background and DMG build scripts
+Resources/             Info.plist, AppIcon.icns, DMG artwork
 Sources/Rectify/       the app
   AXWindow.swift       Accessibility window access (get/set frame)
   Displays.swift       screens in Accessibility coordinates
@@ -84,3 +115,7 @@ artwork are used; everything here is written from scratch.
 Custom shortcut recording, sixths/eighths/ninths, saved app layouts,
 window stashing, cursor-based "throw" moves, iCloud settings sync,
 per-app ignore list, double-click title bar to maximize.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
