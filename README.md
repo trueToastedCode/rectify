@@ -11,12 +11,17 @@ drag-to-edge snapping with a live preview, gaps, display moves and restore.
 2. Drag **Rectify** onto **Applications** in the window that opens.
 3. Launch Rectify from Applications and allow Accessibility access when asked.
 
-The build isn't notarized, so the first launch may be blocked. If it is,
-right-click Rectify in Applications, choose **Open**, then **Open** again.
+Rectify is a universal app: it runs natively on Apple Silicon and Intel Macs
+with macOS 14 or later.
+
+The build isn't notarized, so macOS blocks the first launch. Open
+**System Settings → Privacy & Security**, scroll down and click
+**Open Anyway** next to the message about Rectify.
 
 ## Build from source
 
-Requires Xcode 15+ (or its command-line tools) on macOS 14+.
+Requires Xcode 15+ on macOS 14+. The full Xcode app is needed, not just the
+command-line tools, because the universal build compiles both architectures.
 
 ```sh
 swift test                 # geometry + snap-zone unit tests
