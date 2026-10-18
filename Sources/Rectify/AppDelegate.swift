@@ -8,8 +8,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        statusItem.button?.image = NSImage(systemSymbolName: "rectangle.split.2x1",
-                                           accessibilityDescription: "Rectify")
+        statusItem.button?.image = MenuBarIcon.make()
         let menu = NSMenu()
         menu.delegate = self
         statusItem.menu = menu
